@@ -1,4 +1,5 @@
 import React from 'react'
+import './LoginForm.css';
 import { FaUserAlt, FaLock } from "react-icons/fa"
 
 function LoginForm() {
@@ -8,11 +9,11 @@ function LoginForm() {
             <h1>Login</h1>
             <div className='input-box'>
                 <input className='username' type='text' placeholder='Username' required />
-                <FaUserAlt />
+                <span className='icon'><FaUserAlt /></span>
             </div>
             <div className='input-box'>
                 <input className='password' type='text' placeholder='Password' required />
-                <FaLock />
+                <span className='icon'><FaLock /></span>
             </div>
             <div className='remember-forgot'>
                 <label htmlFor=''>
