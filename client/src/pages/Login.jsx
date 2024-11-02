@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Login.css";
 
 export default function Login() {
@@ -12,12 +13,13 @@ export default function Login() {
 
   const loginUser = (e) => {
     e.preventDefault();
+    axios.get("/");
   };
 
   return (
     <div className="wrapper">
       <div className="form-box login">
-        <form action="">
+        <form onSubmit={loginUser}>
           <h1>Login</h1>
           <div className="input-box">
             <input
