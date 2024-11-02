@@ -1,7 +1,7 @@
 .wrapper{
     position: relative;
     width: 420px;
-    height: 450px;
+    height: 520px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(30px);
@@ -9,39 +9,13 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     padding: 30px 40px;
-    overflow: hidden;
     display: flex;
     align-items: center;
-    transition: height .2s ease;
-}
-
-.wrapper.active {
-    height: 520px;
 }
 
 .wrapper .form-box {
     width: 100%;
     padding: 40px;
-}
-
-.wrapper.active .form-box.login {
-    transition: none;
-    translate: -400px;
-}
-
-.wrapper .form-box.login {
-    transition: translate .18s ease;
-    translate: 0;
-}
-
-.wrapper .form-box.register {
-    position: absolute;
-    translate: 400px;
-}
-
-.wrapper.active .form-box.register {
-    transition: translate .18s ease;
-    translate: -36px;
 }
 
 .wrapper h1{
@@ -81,27 +55,6 @@ form .input-box{
     font-size: 16px;
 }
 
-.wrapper .remember-forgot{
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    margin: -15px 0 15px;
-}
-
-.remember-forgot label input {
-    accent-color: #ffff;
-    margin-right: 4px;
-}
-
-.remember-forgot a{
-    color: #ffff;
-    text-decoration: none;
-}
-
-.remember-forgot a:hover{
-    text-decoration: underline;
-}
-
 .wrapper .terms-conditions {
     display: flex;
     justify-content: space-evenly;
@@ -128,19 +81,19 @@ form .input-box{
     font-weight: 700;
     opacity: .95;
 }
-.wrapper .register-link{
+.wrapper .login-link{
     font-size: 14.5px;
     text-align: center;
     margin: 20px 0 15px;
 }
 
-.register-link p a{
+.login-link p a{
     color: white;
     text-decoration: none;
     font-weight: 600;
 }
 
-.register-link p a:hover{
+.login-link p a:hover{
     text-decoration: underline;
 
 }
