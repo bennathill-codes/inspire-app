@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Register.css";
 
 export default function Register() {
@@ -12,12 +13,13 @@ export default function Register() {
 
   const registerUser = (e) => {
     e.preventDefault();
+    axios.get("/");
   };
 
   return (
     <div className="wrapper">
       <div className="form-box register">
-        <form action="">
+        <form onSubmit={registerUser}>
           <h1>Register</h1>
           <div className="input-box">
             <input
