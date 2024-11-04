@@ -1,19 +1,39 @@
 import { React, useState } from "react";
 import { FaUserAlt, FaLock, FaEnvelope } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     username: "",
     email: "",
     password: "",
   });
 
-  const registerUser = (e) => {
+  const registerUser = async (e) => {
     e.preventDefault();
-    axios.get("/");
+    const { username, email, password } = data;
+    try {
+      const { data } = await axios.post("/register", {
+        username,
+        email,
+        password,
+      });
+
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setData({});
+        toast.success("Login successfully created!");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
