@@ -1,16 +1,11 @@
 const express = require("express");
-const cors = require("cors");
 const router = express.Router();
-const { test } = require("../controllers/authControllers");
-
-// middleware
-router.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
+const { test, registerUser } = require("../controllers/authControllers");
 
 router.get("/", test);
+router.get("/register", (req, res) => {
+  res.send("Register page");
+});
+router.post("/register", registerUser);
 
 module.exports = router;
