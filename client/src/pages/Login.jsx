@@ -1,8 +1,9 @@
 import { React, useState } from "react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
+import { toast } from "react-hot-toast";
 
 export default function Login() {
   const [data, setData] = useState({
@@ -11,9 +12,27 @@ export default function Login() {
     password: "",
   });
 
-  const loginUser = (e) => {
+  const navigate = useNavigate();
+
+  const loginUser = async (e) => {
     e.preventDefault();
-    axios.get("/");
+    const { username, password } = data;
+    try {
+      const { data } = await axios.post("/login", {
+        username,
+        password,
+      });
+
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        setData({});
+        toast.success("Login successful, welcome!");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

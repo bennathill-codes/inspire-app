@@ -1,10 +1,12 @@
 const User = require("../models/user");
 const { hashPassword, comparePassword } = require("../helpers/auth");
+const jwt = require("jsonwebtoken");
 
 const test = (req, res) => {
-  res.json("test is working");
+  return res.json("test is working");
 };
 
+// Register endpoint
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -43,7 +45,65 @@ const registerUser = async (req, res) => {
   }
 };
 
+// Login endpoint
+const loginUser = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // check if user exists
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.json({
+        error: "No user found",
+      });
+    }
+    // check if password matches
+    const match = await comparePassword(password, user.password);
+    if (!match) {
+      return res.json({
+        error: "Password is incorrect",
+      });
+    }
+    jwt.sign(
+      { email: user.email, id: user._id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+      (err, token) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ error: "Token generation failed" });
+        }
+
+        // Set the token as an HTTP-only cookie
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production", // Send only over HTTPS in production
+          sameSite: "strict",
+        });
+
+        // Return user information and token in response
+        res.json({
+          message: "Login successful",
+          token,
+          user: {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+          },
+        });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while logging in. Please try again." });
+  }
+};
+
 module.exports = {
   test,
   registerUser,
+  loginUser,
 };

@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const { mongoose } = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,8 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 // routes
 app.use("/", require("./routes/authRoutes"));
