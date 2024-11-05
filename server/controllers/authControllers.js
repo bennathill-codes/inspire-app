@@ -75,14 +75,14 @@ const loginUser = async (req, res) => {
           return res.status(500).json({ error: "Token generation failed" });
         }
 
-        // Set the token as an HTTP-only cookie
+        // set the token as an HTTP-only cookie
         res.cookie("token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production", // Send only over HTTPS in production
+          secure: process.env.NODE_ENV === "production", // send only over HTTPS in production
           sameSite: "strict",
         });
 
-        // Return user information and token in response
+        // return user information and token in response
         res.json({
           message: "Login successful",
           token,
@@ -102,8 +102,33 @@ const loginUser = async (req, res) => {
   }
 };
 
+// Profile info endpoint
+const getProfile = async (req, res) => {
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(401).json({ error: "No token provided. Please log in." });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+    if (error) {
+      if (error.name === "TokenExpiredError") {
+        return res
+          .status(401)
+          .json({ error: "Session expired. Please log in again." });
+      } else {
+        return res.status(403).json({ error: "Failed to authenticate token." });
+      }
+    }
+
+    // send user info if token is valid
+    res.json({ user });
+  });
+};
+
 module.exports = {
   test,
   registerUser,
   loginUser,
+  getProfile,
 };
