@@ -28,7 +28,7 @@ export default function Login() {
       } else {
         setData({});
         toast.success("Login successful, welcome!");
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
