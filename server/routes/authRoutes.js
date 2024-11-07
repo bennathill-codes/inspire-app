@@ -6,9 +6,10 @@ const {
   loginUser,
   getProfile,
 } = require("../controllers/authControllers");
+const { registerUserHandler } = require("../handlers/users");
 
 router.get("/", test);
-router.post("/register", registerUser);
+router.post("/register", registerUser, registerUserHandler);
 router.post("/login", loginUser);
 router.get("/profile", getProfile);
 
